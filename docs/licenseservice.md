@@ -10,20 +10,26 @@
 server stack. It is unrelated to [gdbclient](gdbclient.md)/`gamedbd` — this is
 licensing the *server binaries themselves*, not player data.
 
-At least **two** binaries independently perform the full handshake and refuse to
-fully start without it, both reading `/home/license.conf` and both calling
+At least **three** binaries independently perform the full handshake and refuse
+to fully start without it, all reading `/home/license.conf` and all calling
 `kill(0, SIGUSR1)` on failure:
 - `gamed`, in [cgame/gs/start.cpp:160-176](../cgame/gs/start.cpp#L160)
 - `gauthd`, in [cnet/gauthd/gauthd.cpp:21-37](../cnet/gauthd/gauthd.cpp#L21)
+- `gfaction`, in [cnet/gfaction/gfaction.cpp:20-36](../cnet/gfaction/gfaction.cpp#L20)
+  — see [gfactiond.md](gfactiond.md)
 
-A third component, `gfaction` (via
-[cnet/gfaction/gfactiondbclient.cpp](../cnet/gfaction/gfactiondbclient.cpp)), and
-`cgame/gs`'s own [netmsg.cpp](../cgame/gs/netmsg.cpp) also `#include <liblicense.h>`
-and gate individual features behind `LIC_*` checks (e.g. `LIC_LOAD_FACTION`), but
-**neither calls `LicenseInterfaces::Init()` itself** — no `Init()` call exists
-anywhere in `cnet/gfaction/`'s own sources. Whether that's a real gap in this
-leak or those checks are meant to run against whatever `LIC` state the hosting
-process already set up is not resolvable from this codebase alone.
+`gfaction` additionally gates its DB connection behind a *second*, independent
+check: [cnet/gfaction/gfactiondbclient.cpp](../cnet/gfaction/gfactiondbclient.cpp)'s
+`OnAddSession`/`Reconnect` kill the process group directly (same `kill(0,
+SIGUSR1)`) the moment that connection resolves if `LIC_LOAD_FACTION` isn't
+granted, rather than merely gating a feature the way the macro is used
+elsewhere.
+
+`cgame/gs`'s own [netmsg.cpp](../cgame/gs/netmsg.cpp) also `#include
+<liblicense.h>` and gates individual features behind `LIC_*` checks, but
+doesn't call `Init()` itself — it doesn't need to, since it's compiled into
+the same `gamed` binary whose `start.cpp` already performs the handshake
+before any of `netmsg.cpp`'s checks would run.
 
 ## Key files
 
