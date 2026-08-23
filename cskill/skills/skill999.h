@@ -1,0 +1,209 @@
+//Skill Parser (c)from elementskill.dll v1.7.4
+
+/* SKILL DESCRIPTION BEGIN */
+/*
+*/
+/* SKILL DESCRIPTION END */
+
+#ifndef __CPPGEN_GNET_SKILL999
+#define __CPPGEN_GNET_SKILL999
+namespace GNET
+{
+#ifdef _SKILL_SERVER
+    class Skill999:public Skill
+    {
+        public:
+        enum
+        { SKILL_ID = 999 };
+        Skill999 ():Skill (SKILL_ID)
+        {
+        }
+    };
+#endif
+    class Skill999Stub:public SkillStub
+    {
+        public:
+#ifdef _SKILL_SERVER
+        class State1:public SkillStub::State
+        {
+            public:
+            int GetTime (Skill * skill) const
+            {
+                return 0;
+            }
+            bool Quit (Skill * skill) const
+            {
+                return false;
+            }
+            bool Loop (Skill * skill) const
+            {
+                return false;
+            }
+            bool Bypass (Skill * skill) const
+            {
+                return false;
+            }
+            void Calculate (Skill * skill) const
+            {
+                skill->GetPlayer ()->SetDecelfmp (75 + (skill->GetLevel () - 1) * 3);
+                skill->GetPlayer ()->SetDecelfap (246 + 99 * (skill->GetLevel () - 1));
+                skill->SetGolddamage ((50 + (skill->GetLevel () - 1) * 10) * (1 + skill->GetT1 () * 0.02) * 5.2);
+                skill->GetPlayer ()->SetPerform (1);
+            }
+            bool Interrupt (Skill * skill) const
+            {
+                return false;
+            }
+            bool Cancel (Skill * skill) const
+            {
+                return 0;
+            }
+            bool Skip (Skill * skill) const
+            {
+                return 0;
+            }
+        };
+#endif
+        Skill999Stub ():SkillStub (999)
+        {
+            cls                 = 258;
+#ifdef _SKILL_CLIENT
+            name                = L"ÌìÀ×ÆÆ";
+            nativename          = "ÌìÀ×ÆÆ";
+            icon                = "ÌìÀ×ÆÆ.dds";
+#endif
+            max_level           = 10;
+            type                = 1;
+            apcost              = 246099;
+            arrowcost           = 0;
+            apgain              = 0;
+            attr                = 2;
+            rank                = 0;
+            eventflag           = 0;
+            is_senior           = 0;
+            posdouble           = 1;
+            clslimit            = 0;
+            time_type           = 1;
+            showorder           = 0;
+            allow_land          = 1;
+            allow_air           = 1;
+            allow_water         = 1;
+            allow_ride          = 0;
+            auto_attack         = 0;
+            long_range          = 2;
+            restrict_corpse     = 0;
+            allow_forms         = 1;
+#ifdef _SKILL_CLIENT
+            effect              = "ÌìÀ×ÆÆ.sgc";
+#endif
+            range.type          = 0;
+            doenchant           = false;
+            dobless             = false;
+            commoncooldown      = 0;
+            commoncooldowntime  = 0;
+            pre_skills.push_back (std::pair < ID, int >(0, 0));
+#ifdef _SKILL_CLIENT
+            aerial_effect       = "";
+            gfxfilename         = "";
+            gfxhangpoint        = "0";
+#endif
+#ifdef _SKILL_SERVER
+            statestub.push_back (new State1 ());
+#endif
+        }
+        virtual ~ Skill999Stub ()
+        {
+        }
+        float GetMpcost (Skill * skill) const
+        {
+            static float aarray[10] = { 75,78,81,84,87,90,93,96,99,102 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        int GetExecutetime (Skill * skill) const
+        {
+            return 0;
+        }
+        int GetCoolingtime (Skill * skill) const
+        {
+            return 15000;
+        }
+        int GetRequiredLevel (Skill * skill) const
+        {
+            static int aarray[10] = { 7031,7036,7041,7046,7051,7056,7061,7066,7071,7076 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        int GetRequiredSp (Skill * skill) const
+        {
+            static int aarray[10] = { 2780,4000,5620,7780,10640,14480,19660,26600,36200,59000 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        float GetRadius (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        float GetAttackdistance (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        float GetAngle (Skill * skill) const
+        {
+            return (float) (1 - 0.0111111 * (0));
+        }
+        float GetPraydistance (Skill * skill) const
+        {
+            return (float) (25);
+        }
+#ifdef _SKILL_CLIENT
+        int GetIntroduction (Skill * skill, wchar_t * buffer, int length, wchar_t * format) const
+        {
+            return _snwprintf (buffer, length, format,
+            skill->GetLevel (),
+            75 + (skill->GetLevel () - 1) * 3, 246 + 99 * (skill->GetLevel () - 1), (50 + (skill->GetLevel () - 1) * 10) * 5.2);
+            
+        }
+#endif
+#ifdef _SKILL_SERVER
+        int GetEnmity (Skill * skill) const
+        {
+            return 0;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetTalent0 (PlayerWrapper * player) const
+        {
+            return (float) (player->GetElfstr ());
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetTalent1 (PlayerWrapper * player) const
+        {
+            return (float) (player->GetElfagi ());
+        }
+#endif
+#ifdef _SKILL_SERVER
+        bool TakeEffect (Skill * skill) const
+        {;
+            return true;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetEffectdistance (Skill * skill) const
+        {
+            return (float) (27);
+        }
+#endif
+#ifdef _SKILL_SERVER
+        int GetAttackspeed (Skill * skill) const
+        {
+            return 20;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetHitrate (Skill * skill) const
+        {
+            return (float) (1.0);
+        }
+#endif
+    };
+}
+#endif

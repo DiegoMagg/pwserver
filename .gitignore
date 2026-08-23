@@ -1,0 +1,56 @@
+# Binaries and Object files
+*.o
+*.a
+*.so
+*.lo
+*.la
+*.obj
+*.lib
+*.exe
+*.dll
+
+# Archives
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
+
+# Makefile targets and temporary files
+Makefile
+!cgame/gs/Makefile
+!cgame/libcm/Makefile
+!cgame/collision/Makefile
+!cgame/ptemplate/Makefile
+!iolib/Makefile
+!iolib/io/Makefile
+!iolib/rpc/Makefile
+!iolib/rpc/test/Makefile
+
+# Logs and temporary data
+*.log
+*.tmp
+*.bak
+dump_*
+core
+
+# Perfect World Specific
+# gs (Removed to allow cgame/gs directory)
+cgame/gs/gs
+
+gamedbd
+gdeliveryd
+glinkd
+gfactiond
+yunovad
+
+# VS Code / IDE settings
+.vscode/
+.idea/
+.vs/
+
+# Artifacts directory (for Antigravity)
+.gemini/
+task.md
+implementation_plan.md
+walkthrough.md

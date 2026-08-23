@@ -1,0 +1,124 @@
+#ifndef __GNET_GNEWROLEDETAILEXTEND_RPCDATA
+#define __GNET_GNEWROLEDETAILEXTEND_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GNewRoleDetailExtend : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		Octets newstorage;
+		Octets reserved1;
+		Octets reserved2;
+		Octets reserved3;
+		Octets reserved4;
+		Octets reserved5;
+		Octets reserved6;
+		Octets reserved7;
+		Octets reserved8;
+		Octets reserved9;
+		Octets reserved10;
+
+	public:
+		GNewRoleDetailExtend (int l_roleid = 0,const Octets& l_newstorage = Octets(0),const Octets& l_reserved1 = Octets(0)
+			,const Octets& l_reserved2 = Octets(0),const Octets& l_reserved3 = Octets(0),const Octets& l_reserved4 = Octets(0)
+			,const Octets& l_reserved5 = Octets(0),const Octets& l_reserved6 = Octets(0),const Octets& l_reserved7 = Octets(0)
+			,const Octets& l_reserved8 = Octets(0),const Octets& l_reserved9 = Octets(0),const Octets& l_reserved10 = Octets(0))
+			: roleid(l_roleid),newstorage(l_newstorage),reserved1(l_reserved1)
+			,reserved2(l_reserved2),reserved3(l_reserved3),reserved4(l_reserved4)
+			,reserved5(l_reserved5),reserved6(l_reserved6),reserved7(l_reserved7)
+			,reserved8(l_reserved8),reserved9(l_reserved9),reserved10(l_reserved10)
+		{
+		}
+
+		GNewRoleDetailExtend(const GNewRoleDetailExtend &rhs)
+			: roleid(rhs.roleid),newstorage(rhs.newstorage),reserved1(rhs.reserved1),
+			reserved2(rhs.reserved2),reserved3(rhs.reserved3),reserved4(rhs.reserved4),
+			reserved5(rhs.reserved5),reserved6(rhs.reserved6),reserved7(rhs.reserved7),
+			reserved8(rhs.reserved8),reserved9(rhs.reserved9),reserved10(rhs.reserved10) { }
+
+		Rpc::Data *Clone() const { return new GNewRoleDetailExtend(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GNewRoleDetailExtend *r = dynamic_cast<const GNewRoleDetailExtend *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				newstorage = r->newstorage;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+				reserved3 = r->reserved3;
+				reserved4 = r->reserved4;
+				reserved5 = r->reserved5;
+				reserved6 = r->reserved6;
+				reserved7 = r->reserved7;
+				reserved8 = r->reserved8;
+				reserved9 = r->reserved9;
+				reserved10 = r->reserved10;
+			}
+			return *this;
+		}
+
+		GNewRoleDetailExtend& operator = (const GNewRoleDetailExtend &rhs)
+		{
+			const GNewRoleDetailExtend *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				newstorage = r->newstorage;
+				reserved1 = r->reserved1;
+				reserved2 = r->reserved2;
+				reserved3 = r->reserved3;
+				reserved4 = r->reserved4;
+				reserved5 = r->reserved5;
+				reserved6 = r->reserved6;
+				reserved7 = r->reserved7;
+				reserved8 = r->reserved8;
+				reserved9 = r->reserved9;
+				reserved10 = r->reserved10;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << newstorage;
+			os << reserved1;
+			os << reserved2;
+			os << reserved3;
+			os << reserved4;
+			os << reserved5;
+			os << reserved6;
+			os << reserved7;
+			os << reserved8;
+			os << reserved9;
+			os << reserved10;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> newstorage;
+			os >> reserved1;
+			os >> reserved2;
+			os >> reserved3;
+			os >> reserved4;
+			os >> reserved5;
+			os >> reserved6;
+			os >> reserved7;
+			os >> reserved8;
+			os >> reserved9;
+			os >> reserved10;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GNewRoleDetailExtend>	GNewRoleDetailExtendVector;
+};
+#endif

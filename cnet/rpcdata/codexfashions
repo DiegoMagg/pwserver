@@ -1,0 +1,70 @@
+#ifndef __GNET_CODEXFASHIONS_RPCDATA
+#define __GNET_CODEXFASHIONS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CodexFashions : public GNET::Rpc::Data
+	{
+	public:
+		int fashion_id;
+		int fashion_count;
+		int fashion_color;
+
+	public:
+		CodexFashions (int l_fashion_id = 0,int l_fashion_count = 0,int l_fashion_color = 0)
+			: fashion_id(l_fashion_id),fashion_count(l_fashion_count),fashion_color(l_fashion_color)
+		{
+		}
+
+		CodexFashions(const CodexFashions &rhs)
+			: fashion_id(rhs.fashion_id),fashion_count(rhs.fashion_count),fashion_color(rhs.fashion_color) { }
+
+		Rpc::Data *Clone() const { return new CodexFashions(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CodexFashions *r = dynamic_cast<const CodexFashions *>(&rhs);
+			if (r && r != this)
+			{
+				fashion_id = r->fashion_id;
+				fashion_count = r->fashion_count;
+				fashion_color = r->fashion_color;
+			}
+			return *this;
+		}
+
+		CodexFashions& operator = (const CodexFashions &rhs)
+		{
+			const CodexFashions *r = &rhs;
+			if (r && r != this)
+			{
+				fashion_id = r->fashion_id;
+				fashion_count = r->fashion_count;
+				fashion_color = r->fashion_color;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << fashion_id;
+			os << fashion_count;
+			os << fashion_color;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> fashion_id;
+			os >> fashion_count;
+			os >> fashion_color;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<CodexFashions>	CodexFashionsVector;
+};
+#endif

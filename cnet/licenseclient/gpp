@@ -1,0 +1,37 @@
+#!/bin/bash
+
+INCLUDE=-I/root/cnet/licenseclient/vm
+
+rm -f md5.o
+gcc md5.c -O3 -fPIC -c -w 2> ./licensecli.log
+cat ./licensecli.log
+
+rm -f base64.o
+g++ base64.cpp -O3 -fPIC -c -w 2> ./licensecli.log
+cat ./licensecli.log
+
+rm -f crypt.o
+g++ crypt.cpp -O3 -fPIC $INCLUDE -c -w 2> ./licensecli.log
+cat ./licensecli.log
+
+rm -f buffer.o
+g++ buffer.cpp -O3 -fPIC -c -w 2> ./licensecli.log
+cat ./licensecli.log
+
+rm -f protocol.o
+g++ protocol.cpp -O3 -fPIC -c -w 2> ./licensecli.log
+cat ./licensecli.log
+
+rm -f liblicense.o
+g++ liblicense.cpp -O3 -fPIC $INCLUDE -c -w 2> ./licensecli.log
+cat ./licensecli.log
+
+rm -f LicenseCli.a
+ar crs LicenseCli.a liblicense.o protocol.o buffer.o base64.o crypt.o md5.o 
+
+rm -f licenseclient
+g++ -o licenseclient licenseclient.cpp -O3 -fvisibility=hidden LicenseCli.a $INCLUDE 2> ./licenseclient.log
+cat ./licenseclient.log
+
+
+

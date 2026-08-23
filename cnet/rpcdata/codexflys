@@ -1,0 +1,70 @@
+#ifndef __GNET_CODEXFLYS_RPCDATA
+#define __GNET_CODEXFLYS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CodexFlys : public GNET::Rpc::Data
+	{
+	public:
+		int fly_id;
+		char reserve;
+		int max_time_speed;
+
+	public:
+		CodexFlys (int l_fly_id = 0,char l_reserve = 0,int l_max_time_speed = 0)
+			: fly_id(l_fly_id),reserve(l_reserve),max_time_speed(l_max_time_speed)
+		{
+		}
+
+		CodexFlys(const CodexFlys &rhs)
+			: fly_id(rhs.fly_id),reserve(rhs.reserve),max_time_speed(rhs.max_time_speed) { }
+
+		Rpc::Data *Clone() const { return new CodexFlys(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CodexFlys *r = dynamic_cast<const CodexFlys *>(&rhs);
+			if (r && r != this)
+			{
+				fly_id = r->fly_id;
+				reserve = r->reserve;
+				max_time_speed = r->max_time_speed;
+			}
+			return *this;
+		}
+
+		CodexFlys& operator = (const CodexFlys &rhs)
+		{
+			const CodexFlys *r = &rhs;
+			if (r && r != this)
+			{
+				fly_id = r->fly_id;
+				reserve = r->reserve;
+				max_time_speed = r->max_time_speed;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << fly_id;
+			os << reserve;
+			os << max_time_speed;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> fly_id;
+			os >> reserve;
+			os >> max_time_speed;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<CodexFlys>	CodexFlysVector;
+};
+#endif

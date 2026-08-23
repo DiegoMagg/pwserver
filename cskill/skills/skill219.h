@@ -1,0 +1,173 @@
+//Skill Parser (c)from elementskill.dll v1.7.4
+
+/* SKILL DESCRIPTION BEGIN */
+/*
+12190  "○Diminished Vigor"12191  "^8080ff●Diminished Vigor　　　　　　　　　　　　
+
+^ffcb4aRange　^96f5ff28.5^ffffff　^ffcb4ameters
+^ffcb4aMana　^96f5ff405^ffffff
+^ffcb4aChannel　^ffffffInstant
+^ffcb4aCast　^ffffff90.0  ^ffcb4aseconds
+^ffcb4aWeapon　^ffffffSoulsphere
+
+^ffcb4aRequired Cultivation　^ffffffAware of the Void
+Weaken the target's soul to diminish their healing ability.
+Put the target's Guardian Charms into cooldown immediately.
+
+Diminished Vigor shares a ^96f5ff90^ffffff second cooldown with Empowered Vigor.
+
+^d618e7Demon version reduce ^96f5ff10^d618e7 Chi of the target."*/
+/* SKILL DESCRIPTION END */
+
+#ifndef __CPPGEN_GNET_SKILL219
+#define __CPPGEN_GNET_SKILL219
+namespace GNET
+{
+#ifdef _SKILL_SERVER
+    class Skill219:public Skill
+    {
+        public:
+        enum
+        { SKILL_ID = 219 };
+        Skill219 ():Skill (SKILL_ID)
+        {
+        }
+    };
+#endif
+    class Skill219Stub:public SkillStub
+    {
+        public:
+        Skill219Stub ():SkillStub (219)
+        {
+            cls                 = 255;
+#ifdef _SKILL_CLIENT
+            name                = L"��Ȼ";
+            nativename          = "��Ȼ";
+            icon                = "";
+#endif
+            max_level           = 1;
+            type                = 6;
+            apcost              = 0;
+            arrowcost           = 0;
+            apgain              = 0;
+            attr                = 1;
+            rank                = 0;
+            eventflag           = 0;
+            is_senior           = 0;
+            posdouble           = 0;
+            clslimit            = 0;
+            time_type           = 0;
+            showorder           = 0;
+            allow_land          = 1;
+            allow_air           = 1;
+            allow_water         = 1;
+            allow_ride          = 0;
+            auto_attack         = 0;
+            long_range          = 0;
+            restrict_corpse     = 0;
+            allow_forms         = 0;
+#ifdef _SKILL_CLIENT
+            effect              = "��ɱ.sgc";
+#endif
+            range.type          = 5;
+            doenchant           = true;
+            dobless             = false;
+            commoncooldown      = 0;
+            commoncooldowntime  = 0;
+            pre_skills.push_back (std::pair < ID, int >(0, 1));
+#ifdef _SKILL_CLIENT
+            aerial_effect       = "";
+            gfxfilename         = "";
+            gfxhangpoint        = "0";
+#endif
+#ifdef _SKILL_SERVER
+#endif
+        }
+        virtual ~ Skill219Stub ()
+        {
+        }
+        float GetMpcost (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        int GetExecutetime (Skill * skill) const
+        {
+            return 0;
+        }
+        int GetCoolingtime (Skill * skill) const
+        {
+            return 0;
+        }
+        int GetRequiredLevel (Skill * skill) const
+        {
+            static int aarray[10] = { 0 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        int GetRequiredSp (Skill * skill) const
+        {
+            static int aarray[10] = { 0 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        float GetRadius (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        float GetAttackdistance (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        float GetAngle (Skill * skill) const
+        {
+            return (float) (1 - 0.0111111 * (0));
+        }
+        float GetPraydistance (Skill * skill) const
+        {
+            return (float) (0);
+        }
+#ifdef _SKILL_CLIENT
+        int GetIntroduction (Skill * skill, wchar_t * buffer, int length, wchar_t * format) const
+        {
+            return _snwprintf (buffer, length, format);
+        }
+#endif
+#ifdef _SKILL_SERVER
+        int GetEnmity (Skill * skill) const
+        {
+            return 0;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        bool StateAttack (Skill * skill) const
+        {
+            skill->GetVictim ()->SetProbability (1.0 * 5);
+            skill->GetVictim ()->SetTime (10000);
+            skill->GetVictim ()->SetRatio (1);
+            skill->GetVictim ()->SetShowicon (1);
+            skill->GetVictim ()->SetSharpblade (1);
+            skill->GetVictim ()->SetProbability (1.0 * -1);
+            skill->GetVictim ()->SetRatio (0.05);
+            skill->GetVictim ()->SetScaledecmp (1);
+            return true;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        bool TakeEffect (Skill * skill) const
+        {;
+            return true;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetEffectdistance (Skill * skill) const
+        {
+            return (float) (0);
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetHitrate (Skill * skill) const
+        {
+            return (float) (1.0);
+        }
+#endif
+    };
+}
+#endif

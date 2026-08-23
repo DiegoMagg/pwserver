@@ -1,0 +1,78 @@
+#ifndef __GNET_GCODEXMOUNTS_RPCDATA
+#define __GNET_GCODEXMOUNTS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCodexMounts : public GNET::Rpc::Data
+	{
+	public:
+		int mountid;
+		unsigned char mountcount;
+		int res;
+		unsigned char res1;
+
+	public:
+		GCodexMounts (int l_mountid = 0,unsigned char l_mountcount = 0,int l_res = 0
+			,unsigned char l_res1 = 0)
+			: mountid(l_mountid),mountcount(l_mountcount),res(l_res)
+			,res1(l_res1)
+		{
+		}
+
+		GCodexMounts(const GCodexMounts &rhs)
+			: mountid(rhs.mountid),mountcount(rhs.mountcount),res(rhs.res),
+			res1(rhs.res1) { }
+
+		Rpc::Data *Clone() const { return new GCodexMounts(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCodexMounts *r = dynamic_cast<const GCodexMounts *>(&rhs);
+			if (r && r != this)
+			{
+				mountid = r->mountid;
+				mountcount = r->mountcount;
+				res = r->res;
+				res1 = r->res1;
+			}
+			return *this;
+		}
+
+		GCodexMounts& operator = (const GCodexMounts &rhs)
+		{
+			const GCodexMounts *r = &rhs;
+			if (r && r != this)
+			{
+				mountid = r->mountid;
+				mountcount = r->mountcount;
+				res = r->res;
+				res1 = r->res1;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << mountid;
+			os << mountcount;
+			os << res;
+			os << res1;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> mountid;
+			os >> mountcount;
+			os >> res;
+			os >> res1;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GCodexMounts>	GCodexMountsVector;
+};
+#endif

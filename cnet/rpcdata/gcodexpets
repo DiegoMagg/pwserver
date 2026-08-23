@@ -1,0 +1,78 @@
+#ifndef __GNET_GCODEXPETS_RPCDATA
+#define __GNET_GCODEXPETS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCodexPets : public GNET::Rpc::Data
+	{
+	public:
+		int petid;
+		unsigned char petcount;
+		int res;
+		unsigned short res1;
+
+	public:
+		GCodexPets (int l_petid = 0,unsigned char l_petcount = 0,int l_res = 0
+			,unsigned short l_res1 = 0)
+			: petid(l_petid),petcount(l_petcount),res(l_res)
+			,res1(l_res1)
+		{
+		}
+
+		GCodexPets(const GCodexPets &rhs)
+			: petid(rhs.petid),petcount(rhs.petcount),res(rhs.res),
+			res1(rhs.res1) { }
+
+		Rpc::Data *Clone() const { return new GCodexPets(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCodexPets *r = dynamic_cast<const GCodexPets *>(&rhs);
+			if (r && r != this)
+			{
+				petid = r->petid;
+				petcount = r->petcount;
+				res = r->res;
+				res1 = r->res1;
+			}
+			return *this;
+		}
+
+		GCodexPets& operator = (const GCodexPets &rhs)
+		{
+			const GCodexPets *r = &rhs;
+			if (r && r != this)
+			{
+				petid = r->petid;
+				petcount = r->petcount;
+				res = r->res;
+				res1 = r->res1;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << petid;
+			os << petcount;
+			os << res;
+			os << res1;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> petid;
+			os >> petcount;
+			os >> res;
+			os >> res1;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GCodexPets>	GCodexPetsVector;
+};
+#endif

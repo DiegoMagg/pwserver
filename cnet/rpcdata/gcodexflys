@@ -1,0 +1,70 @@
+#ifndef __GNET_GCODEXFLYS_RPCDATA
+#define __GNET_GCODEXFLYS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class GCodexFlys : public GNET::Rpc::Data
+	{
+	public:
+		int flyid;
+		unsigned char res;
+		int maxspeed;
+
+	public:
+		GCodexFlys (int l_flyid = 0,unsigned char l_res = 0,int l_maxspeed = 0)
+			: flyid(l_flyid),res(l_res),maxspeed(l_maxspeed)
+		{
+		}
+
+		GCodexFlys(const GCodexFlys &rhs)
+			: flyid(rhs.flyid),res(rhs.res),maxspeed(rhs.maxspeed) { }
+
+		Rpc::Data *Clone() const { return new GCodexFlys(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const GCodexFlys *r = dynamic_cast<const GCodexFlys *>(&rhs);
+			if (r && r != this)
+			{
+				flyid = r->flyid;
+				res = r->res;
+				maxspeed = r->maxspeed;
+			}
+			return *this;
+		}
+
+		GCodexFlys& operator = (const GCodexFlys &rhs)
+		{
+			const GCodexFlys *r = &rhs;
+			if (r && r != this)
+			{
+				flyid = r->flyid;
+				res = r->res;
+				maxspeed = r->maxspeed;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << flyid;
+			os << res;
+			os << maxspeed;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> flyid;
+			os >> res;
+			os >> maxspeed;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<GCodexFlys>	GCodexFlysVector;
+};
+#endif

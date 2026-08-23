@@ -1,0 +1,318 @@
+//Skill Parser (c)from elementskill.dll v1.7.4
+
+/* SKILL DESCRIPTION BEGIN */
+/*
+39570  "Î¨Gravel Blade"39571  "^ff5c00Î¨Gravel Blade
+
+^ffcb4aRangeã€€^96f5ff28^ffffffã€€^ffcb4ameters
+^ffcb4aManaã€€^96f5ff75^ffffff
+^ffcb4aChannelã€€^ffffff0.3ã€€^ffcb4aseconds
+^ffcb4aCastã€€^ffffff0.7ã€€^ffcb4aseconds
+^ffcb4aCooldownã€€^ffffff3.0 ^ffcb4aseconds
+^ffcb4aChi Gainedã€€^ffffff20
+^ffcb4aRequired Weapon:ã€€^ffffffSword
+^ffcb4aGlyph Bonusã€€^ff5c00Martial Prowess
+
+^ffcb4aRequired Cultivationã€€^ffffffChaotic Soul
+Deliver a massive blow to your enemy, dealing ^96f5ff110%%^ffffff of
+base physical damage plus ^96f5ff100%%^ffffff of weapon damage plus ^96f5ff1650^ffffff.
+
+Has a ^96f5ff60%%^ffffff chance of applying the Î¨Spirit Bore status,
+causing your ^96f5ffÎ¨Gemini Slash^ffffff to deal an additional
+^96f5ff7950 ^ffffffMetal damage and reduce the target's Attack
+and Defense Levels by ^96f5ff12^ffffff for ^96f5ff3^ffffff minutes.
+
+Has a ^96f5ff25%% ^ffffffchance of applying the Î¨Bloodletting
+status, causing your ^96f5ffÎ¨Stalagstrike^ffffff to
+deal an additional ^96f5ff3750 ^ffffffdamage and
+stun the target for ^96f5ff5^ffffff seconds.
+
+^ffcb4aGolden Glyph Effect:@1
+^ffcb4aLv1-4: Deals an additional ^96f5ff30%%^ffcb4a of weapon damage plus ^96f5ff3780^ffcb4a.
+^ffcb4aLv5-7: Deals an additional ^96f5ff45%% ^ffcb4aof weapon damage plus ^96f5ff4670^ffcb4a.
+^ffcb4aLv8-9: Deals an additional ^96f5ff60%% ^ffcb4aof weapon damage plus ^96f5ff5560^ffcb4a.
+^ffcb4aLv10: Deals an additional ^96f5ff75%% ^ffcb4aof weapon damage plus ^96f5ff6450^ffcb4a.@1@2
+^ffcb4aDeals an additional ^96f5ff%d%% ^ffcb4aof weapon damage plus ^96f5ff%d^ffcb4a.@2
+"*/
+/* SKILL DESCRIPTION END */
+
+#ifndef __CPPGEN_GNET_SKILL957
+#define __CPPGEN_GNET_SKILL957
+namespace GNET
+{
+#ifdef _SKILL_SERVER
+    class Skill957:public Skill
+    {
+        public:
+        enum
+        { SKILL_ID = 957 };
+        Skill957 ():Skill (SKILL_ID)
+        {
+        }
+    };
+#endif
+    class Skill957Stub:public SkillStub
+    {
+        public:
+#ifdef _SKILL_SERVER
+        class State1:public SkillStub::State
+        {
+            public:
+            int GetTime (Skill * skill) const
+            {
+                return 50;
+            }
+            bool Quit (Skill * skill) const
+            {
+                return false;
+            }
+            bool Loop (Skill * skill) const
+            {
+                return false;
+            }
+            bool Bypass (Skill * skill) const
+            {
+                return false;
+            }
+            void Calculate (Skill * skill) const
+            {
+                skill->GetPlayer ()->SetPray (1);
+            }
+            bool Interrupt (Skill * skill) const
+            {
+                return false;
+            }
+            bool Cancel (Skill * skill) const
+            {
+                return 0;
+            }
+            bool Skip (Skill * skill) const
+            {
+                return 0;
+            }
+        };
+#endif
+#ifdef _SKILL_SERVER
+        class State2:public SkillStub::State
+        {
+            public:
+            int GetTime (Skill * skill) const
+            {
+                return 50;
+            }
+            bool Quit (Skill * skill) const
+            {
+                return false;
+            }
+            bool Loop (Skill * skill) const
+            {
+                return false;
+            }
+            bool Bypass (Skill * skill) const
+            {
+                return false;
+            }
+            void Calculate (Skill * skill) const
+            {
+                skill->GetPlayer ()->SetPerform (1);
+            }
+            bool Interrupt (Skill * skill) const
+            {
+                return false;
+            }
+            bool Cancel (Skill * skill) const
+            {
+                return 0;
+            }
+            bool Skip (Skill * skill) const
+            {
+                return 0;
+            }
+        };
+#endif
+#ifdef _SKILL_SERVER
+        class State3:public SkillStub::State
+        {
+            public:
+            int GetTime (Skill * skill) const
+            {
+                return 0;
+            }
+            bool Quit (Skill * skill) const
+            {
+                return false;
+            }
+            bool Loop (Skill * skill) const
+            {
+                return false;
+            }
+            bool Bypass (Skill * skill) const
+            {
+                return false;
+            }
+            void Calculate (Skill * skill) const
+            {
+            }
+            bool Interrupt (Skill * skill) const
+            {
+                return false;
+            }
+            bool Cancel (Skill * skill) const
+            {
+                return 0;
+            }
+            bool Skip (Skill * skill) const
+            {
+                return 0;
+            }
+        };
+#endif
+        Skill957Stub ():SkillStub (957)
+        {
+            cls                 = 127;
+#ifdef _SKILL_CLIENT
+            name                = L"¼ÓËÙÃâÔÎ¼õÉË¼Ó¶Ü³¬¼¶±£»¤";
+            nativename          = "¼ÓËÙÃâÔÎ¼õÉË¼Ó¶Ü³¬¼¶±£»¤";
+            icon                = "";
+#endif
+            max_level           = 10;
+            type                = 3;
+            apcost              = 0;
+            arrowcost           = 0;
+            apgain              = 0;
+            attr                = 1;
+            rank                = 0;
+            eventflag           = 0;
+            is_senior           = 0;
+            posdouble           = 0;
+            clslimit            = 0;
+            time_type           = 0;
+            showorder           = 0;
+            allow_land          = 1;
+            allow_air           = 1;
+            allow_water         = 1;
+            allow_ride          = 0;
+            auto_attack         = 0;
+            long_range          = 0;
+            restrict_corpse     = 0;
+            allow_forms         = 0;
+#ifdef _SKILL_CLIENT
+            effect              = "ÐîÆø.sgc";
+#endif
+            range.type          = 2;
+            doenchant           = true;
+            dobless             = false;
+            commoncooldown      = 0;
+            commoncooldowntime  = 0;
+            pre_skills.push_back (std::pair < ID, int >(0, 1));
+#ifdef _SKILL_CLIENT
+            aerial_effect       = "";
+            gfxfilename         = "";
+            gfxhangpoint        = "0";
+#endif
+#ifdef _SKILL_SERVER
+            statestub.push_back (new State1 ());
+            statestub.push_back (new State2 ());
+            statestub.push_back (new State3 ());
+#endif
+        }
+        virtual ~ Skill957Stub ()
+        {
+        }
+        float GetMpcost (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        int GetExecutetime (Skill * skill) const
+        {
+            return 50;
+        }
+        int GetCoolingtime (Skill * skill) const
+        {
+            return 0;
+        }
+        int GetRequiredLevel (Skill * skill) const
+        {
+            static int aarray[10] = { 1,2,3,4,5,6,7,8,9,10 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        int GetRequiredSp (Skill * skill) const
+        {
+            static int aarray[10] = { 0 };
+            return aarray[skill->GetLevel () - 1];
+        }
+        float GetRadius (Skill * skill) const
+        {
+            return (float) (60);
+        }
+        float GetAttackdistance (Skill * skill) const
+        {
+            return (float) (0);
+        }
+        float GetAngle (Skill * skill) const
+        {
+            return (float) (1 - 0.0111111 * (0));
+        }
+        float GetPraydistance (Skill * skill) const
+        {
+            return (float) (45);
+        }
+#ifdef _SKILL_CLIENT
+        int GetIntroduction (Skill * skill, wchar_t * buffer, int length, wchar_t * format) const
+        {
+            return _snwprintf (buffer, length, format);
+        }
+#endif
+#ifdef _SKILL_SERVER
+        int GetEnmity (Skill * skill) const
+        {
+            return 0;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        bool StateAttack (Skill * skill) const
+        {
+            skill->GetVictim ()->SetProbability (1.0 * 100);
+            skill->GetVictim ()->SetTime (skill->GetMagicdamage ());
+            skill->GetVictim ()->SetRatio (0.2 * skill->GetLevel ());
+            skill->GetVictim ()->SetSpeedup (1);
+            skill->GetVictim ()->SetTime (skill->GetMagicdamage ());
+            skill->GetVictim ()->SetAmount (20000 * skill->GetLevel ());
+            skill->GetVictim ()->SetValue (1);
+            skill->GetVictim ()->SetWingshield (1);
+            skill->GetVictim ()->SetProbability (1.0 * 100);
+            skill->GetVictim ()->SetTime (skill->GetMagicdamage ());
+            skill->GetVictim ()->SetRatio (0.1 * skill->GetLevel ());
+            skill->GetVictim ()->SetDechurt (1);
+            skill->GetVictim ()->SetTime (skill->GetMagicdamage ());
+            skill->GetVictim ()->SetFreemove (1);
+            return true;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        bool TakeEffect (Skill * skill) const
+        {;
+            return true;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetEffectdistance (Skill * skill) const
+        {
+            return (float) (30);
+        }
+#endif
+#ifdef _SKILL_SERVER
+        int GetAttackspeed (Skill * skill) const
+        {
+            return 0;
+        }
+#endif
+#ifdef _SKILL_SERVER
+        float GetHitrate (Skill * skill) const
+        {
+            return (float) (1.0);
+        }
+#endif
+    };
+}
+#endif

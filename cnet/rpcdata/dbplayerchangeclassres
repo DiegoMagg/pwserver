@@ -1,0 +1,83 @@
+#ifndef __GNET_DBPLAYERCHANGECLASSRES_RPCDATA
+#define __GNET_DBPLAYERCHANGECLASSRES_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gmailsyncdata"
+
+namespace GNET
+{
+	class DBPlayerChangeClassRes : public GNET::Rpc::Data
+	{
+	public:
+		int retcode;
+		unsigned char oldcls;
+		unsigned char oldgender;
+		Octets custom_data;
+		GMailSyncData syncdata;
+
+	public:
+		DBPlayerChangeClassRes (int l_retcode = -1,unsigned char l_oldcls = 0,unsigned char l_oldgender = 0
+			,const Octets& l_custom_data = Octets(),const GMailSyncData& l_syncdata = GMailSyncData())
+			: retcode(l_retcode),oldcls(l_oldcls),oldgender(l_oldgender)
+			,custom_data(l_custom_data),syncdata(l_syncdata)
+		{
+		}
+
+		DBPlayerChangeClassRes(const DBPlayerChangeClassRes &rhs)
+			: retcode(rhs.retcode),oldcls(rhs.oldcls),oldgender(rhs.oldgender),
+			custom_data(rhs.custom_data),syncdata(rhs.syncdata) { }
+
+		Rpc::Data *Clone() const { return new DBPlayerChangeClassRes(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const DBPlayerChangeClassRes *r = dynamic_cast<const DBPlayerChangeClassRes *>(&rhs);
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+				oldcls = r->oldcls;
+				oldgender = r->oldgender;
+				custom_data = r->custom_data;
+				syncdata = r->syncdata;
+			}
+			return *this;
+		}
+
+		DBPlayerChangeClassRes& operator = (const DBPlayerChangeClassRes &rhs)
+		{
+			const DBPlayerChangeClassRes *r = &rhs;
+			if (r && r != this)
+			{
+				retcode = r->retcode;
+				oldcls = r->oldcls;
+				oldgender = r->oldgender;
+				custom_data = r->custom_data;
+				syncdata = r->syncdata;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << retcode;
+			os << oldcls;
+			os << oldgender;
+			os << custom_data;
+			os << syncdata;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> retcode;
+			os >> oldcls;
+			os >> oldgender;
+			os >> custom_data;
+			os >> syncdata;
+			return os;
+		}
+
+	};
+};
+#endif

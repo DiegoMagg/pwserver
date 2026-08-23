@@ -1,0 +1,101 @@
+#ifndef __GNET_DBPLAYERCHANGECLASSARG_RPCDATA
+#define __GNET_DBPLAYERCHANGECLASSARG_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gmailsyncdata"
+
+namespace GNET
+{
+	class DBPlayerChangeClassArg : public GNET::Rpc::Data
+	{
+	public:
+		int roleid;
+		int item_id;
+		int item_num;
+		int item_pos;
+		unsigned char newcls;
+		unsigned char newgender;
+		Octets custom_data;
+		GMailSyncData syncdata;
+
+	public:
+		DBPlayerChangeClassArg (int l_roleid = -1,int l_item_id = -1,int l_item_num = 0
+			,int l_item_pos = -1,unsigned char l_newcls = 0,unsigned char l_newgender = 0
+			,const Octets& l_custom_data = Octets(),const GMailSyncData& l_syncdata = GMailSyncData())
+			: roleid(l_roleid),item_id(l_item_id),item_num(l_item_num)
+			,item_pos(l_item_pos),newcls(l_newcls),newgender(l_newgender)
+			,custom_data(l_custom_data),syncdata(l_syncdata)
+		{
+		}
+
+		DBPlayerChangeClassArg(const DBPlayerChangeClassArg &rhs)
+			: roleid(rhs.roleid),item_id(rhs.item_id),item_num(rhs.item_num),
+			item_pos(rhs.item_pos),newcls(rhs.newcls),newgender(rhs.newgender),
+			custom_data(rhs.custom_data),syncdata(rhs.syncdata) { }
+
+		Rpc::Data *Clone() const { return new DBPlayerChangeClassArg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const DBPlayerChangeClassArg *r = dynamic_cast<const DBPlayerChangeClassArg *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				item_id = r->item_id;
+				item_num = r->item_num;
+				item_pos = r->item_pos;
+				newcls = r->newcls;
+				newgender = r->newgender;
+				custom_data = r->custom_data;
+				syncdata = r->syncdata;
+			}
+			return *this;
+		}
+
+		DBPlayerChangeClassArg& operator = (const DBPlayerChangeClassArg &rhs)
+		{
+			const DBPlayerChangeClassArg *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				item_id = r->item_id;
+				item_num = r->item_num;
+				item_pos = r->item_pos;
+				newcls = r->newcls;
+				newgender = r->newgender;
+				custom_data = r->custom_data;
+				syncdata = r->syncdata;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << item_id;
+			os << item_num;
+			os << item_pos;
+			os << newcls;
+			os << newgender;
+			os << custom_data;
+			os << syncdata;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> item_id;
+			os >> item_num;
+			os >> item_pos;
+			os >> newcls;
+			os >> newgender;
+			os >> custom_data;
+			os >> syncdata;
+			return os;
+		}
+
+	};
+};
+#endif

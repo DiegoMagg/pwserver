@@ -1,0 +1,65 @@
+#ifndef __GNET_SETNEWROLEDETAILEXTENDARG_RPCDATA
+#define __GNET_SETNEWROLEDETAILEXTENDARG_RPCDATA
+
+#include "rpcdefs.h"
+
+#include "gnewroledetailextend"
+
+namespace GNET
+{
+	class SetNewRoleDetailExtendArg : public GNET::Rpc::Data
+	{
+	public:
+		unsigned int roleid;
+		GNewRoleDetailExtend detail;
+
+	public:
+		SetNewRoleDetailExtendArg (unsigned int l_roleid = 0,const GNewRoleDetailExtend& l_detail = GNewRoleDetailExtend())
+			: roleid(l_roleid),detail(l_detail)
+		{
+		}
+
+		SetNewRoleDetailExtendArg(const SetNewRoleDetailExtendArg &rhs)
+			: roleid(rhs.roleid),detail(rhs.detail) { }
+
+		Rpc::Data *Clone() const { return new SetNewRoleDetailExtendArg(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const SetNewRoleDetailExtendArg *r = dynamic_cast<const SetNewRoleDetailExtendArg *>(&rhs);
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				detail = r->detail;
+			}
+			return *this;
+		}
+
+		SetNewRoleDetailExtendArg& operator = (const SetNewRoleDetailExtendArg &rhs)
+		{
+			const SetNewRoleDetailExtendArg *r = &rhs;
+			if (r && r != this)
+			{
+				roleid = r->roleid;
+				detail = r->detail;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << roleid;
+			os << detail;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> roleid;
+			os >> detail;
+			return os;
+		}
+
+	};
+};
+#endif

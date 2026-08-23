@@ -1,0 +1,78 @@
+#ifndef __GNET_CODEXPETS_RPCDATA
+#define __GNET_CODEXPETS_RPCDATA
+
+#include "rpcdefs.h"
+
+
+namespace GNET
+{
+	class CodexPets : public GNET::Rpc::Data
+	{
+	public:
+		int pet_id;
+		int pet_count;
+		int reserve;
+		short reserve1;
+
+	public:
+		CodexPets (int l_pet_id = 0,int l_pet_count = 1,int l_reserve = 0
+			,short l_reserve1 = 0)
+			: pet_id(l_pet_id),pet_count(l_pet_count),reserve(l_reserve)
+			,reserve1(l_reserve1)
+		{
+		}
+
+		CodexPets(const CodexPets &rhs)
+			: pet_id(rhs.pet_id),pet_count(rhs.pet_count),reserve(rhs.reserve),
+			reserve1(rhs.reserve1) { }
+
+		Rpc::Data *Clone() const { return new CodexPets(*this); }
+
+		Rpc::Data& operator = (const Rpc::Data &rhs)
+		{
+			const CodexPets *r = dynamic_cast<const CodexPets *>(&rhs);
+			if (r && r != this)
+			{
+				pet_id = r->pet_id;
+				pet_count = r->pet_count;
+				reserve = r->reserve;
+				reserve1 = r->reserve1;
+			}
+			return *this;
+		}
+
+		CodexPets& operator = (const CodexPets &rhs)
+		{
+			const CodexPets *r = &rhs;
+			if (r && r != this)
+			{
+				pet_id = r->pet_id;
+				pet_count = r->pet_count;
+				reserve = r->reserve;
+				reserve1 = r->reserve1;
+			}
+			return *this;
+		}
+
+		OctetsStream& marshal(OctetsStream & os) const
+		{
+			os << pet_id;
+			os << pet_count;
+			os << reserve;
+			os << reserve1;
+			return os;
+		}
+
+		const OctetsStream& unmarshal(const OctetsStream &os)
+		{
+			os >> pet_id;
+			os >> pet_count;
+			os >> reserve;
+			os >> reserve1;
+			return os;
+		}
+
+	};
+	typedef GNET::RpcDataVector<CodexPets>	CodexPetsVector;
+};
+#endif
