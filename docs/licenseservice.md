@@ -7,11 +7,29 @@
 ## Purpose
 
 `licenseservice` is the anti-piracy / seat-licensing daemon for this Perfect World
-server stack. Every process that embeds `liblicense` (confirmed: `gamed`, via
-[cgame/gs/start.cpp](../cgame/gs/start.cpp)) refuses to fully start unless it can
-complete a challenge/response handshake against this service and receive back a
-signed license payload. It is unrelated to [gdbclient](gdbclient.md)/`gamedbd` —
-this is licensing the *server binaries themselves*, not player data.
+server stack. It is unrelated to [gdbclient](gdbclient.md)/`gamedbd` — this is
+licensing the *server binaries themselves*, not player data.
+
+At least **three** binaries independently perform the full handshake and refuse
+to fully start without it, all reading `/home/license.conf` and all calling
+`kill(0, SIGUSR1)` on failure:
+- `gamed`, in [cgame/gs/start.cpp:160-176](../cgame/gs/start.cpp#L160)
+- `gauthd`, in [cnet/gauthd/gauthd.cpp:21-37](../cnet/gauthd/gauthd.cpp#L21)
+- `gfaction`, in [cnet/gfaction/gfaction.cpp:20-36](../cnet/gfaction/gfaction.cpp#L20)
+  — see [gfactiond.md](gfactiond.md)
+
+`gfaction` additionally gates its DB connection behind a *second*, independent
+check: [cnet/gfaction/gfactiondbclient.cpp](../cnet/gfaction/gfactiondbclient.cpp)'s
+`OnAddSession`/`Reconnect` kill the process group directly (same `kill(0,
+SIGUSR1)`) the moment that connection resolves if `LIC_LOAD_FACTION` isn't
+granted, rather than merely gating a feature the way the macro is used
+elsewhere.
+
+`cgame/gs`'s own [netmsg.cpp](../cgame/gs/netmsg.cpp) also `#include
+<liblicense.h>` and gates individual features behind `LIC_*` checks, but
+doesn't call `Init()` itself — it doesn't need to, since it's compiled into
+the same `gamed` binary whose `start.cpp` already performs the handshake
+before any of `netmsg.cpp`'s checks would run.
 
 ## Key files
 
@@ -71,10 +89,9 @@ are stubs in this leak:
 6. Client computes `success = ip_last * time_key * version` and exchanges
    `LicenseQuit` with the server to close out the handshake; a mismatch on
    `success` fails the whole `Init()` call.
-7. If any step fails, the caller (`gamed`'s `start.cpp`) prints
+7. If any step fails, the caller (`gamed`'s or `gauthd`'s `main()`) prints
    `LICENSE::START: ERR=<code>` and kills its own process group
-   (`kill(0, SIGUSR1)`) — the game server does not run without a completed
-   handshake.
+   (`kill(0, SIGUSR1)`) — neither process runs without a completed handshake.
 
 ## Counterpart: `licenseclient` and the `LIC_*` feature gates
 
@@ -94,12 +111,14 @@ The whole `Init()`/`Check()`/`Value()` path is wrapped in
 (`cnet/licenseclient/vm/VirtualizerSDK*.h`) to virtualize/obfuscate the code at
 build time — an anti-tamper layer on top of the protocol itself.
 
-`gamed` reads the license server's address/port/login/passwd from
-`/home/license.conf`'s `[GLicenseClient]` section
-([cgame/gs/start.cpp:162-168](../cgame/gs/start.cpp#L162)); a hardcoded sample
-connection (`189.127.164.9:33000`, login/pass `teste`/`teste`) exists in
+`gamed` and `gauthd` each read the license server's address/port/login/passwd
+from `/home/license.conf`'s `[GLicenseClient]` section
+([cgame/gs/start.cpp:162-168](../cgame/gs/start.cpp#L162),
+[cnet/gauthd/gauthd.cpp:25-29](../cnet/gauthd/gauthd.cpp#L25)); a hardcoded
+sample connection (`189.127.164.9:33000`, login/pass `teste`/`teste`) exists in
 [licenseclient.cpp](../cnet/licenseclient/licenseclient.cpp)'s standalone test
-`main()`.
+`main()`. `gauthd` additionally gates its MySQL init behind `LIC_INIT_MYSQL`
+([cnet/gauthd/gmysqlclient.cpp:66](../cnet/gauthd/gmysqlclient.cpp#L66)).
 
 Crypto/encoding primitives used: RC4 ([rc4.h](../cnet/licenseclient/rc4.h)),
 HMAC-MD5 ([md5.c](../cnet/licenseclient/md5.c)), base64
